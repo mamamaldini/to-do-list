@@ -1,59 +1,57 @@
-# 📝 Python TODO List
+# Python TO-DO List Application
 
-A simple command-line TODO list application written in Python. Tasks are stored in a local text file, so your list persists between runs — no database or external dependencies required.
+A feature-rich command-line TO-DO list app built in Python without the use of any frameworks or databases, just clean code and the standard library. Important for practicing file I/O, list/dict manipulation, sorting algorithms, and CLI design.
 
-This repo includes two versions:
-
-- **`todo_list.py`** — A basic version with core features (add, view, complete, delete).
-- **`todo_list_advanced.py`** — An enhanced version with priorities, due dates, editing, searching, and sorting.
+---
 
 ## Features
 
-### Basic (`todo_list.py`)
-- Add a task
-- View all tasks
-- Mark a task as complete
-- Delete a task
-- Tasks saved automatically to `tasks.txt`
+- ➕ **Add tasks** with text, priority, and an optional due date
+- 👀 **View tasks** — see status, priority, and due date at a glance
+- ✏️ **Edit tasks** — update text, priority, or due date anytime
+- ✔️ **Mark tasks complete**
+- 🗑️ **Delete tasks**
+- 🔴🟡🟢 **Priority levels** — High / Medium / Low
+- 📅 **Due dates** with format validation (`YYYY-MM-DD`)
+- 🔍 **Search** tasks by keyword
+- ↕️ **Sort** tasks by priority, due date, or completion status
+- 🧹 **Clear completed** tasks in one click
+- 💾 **Auto-saves** everything to `tasks.txt` — your list survives between runs
 
-### Advanced (`todo_list_advanced.py`)
-Everything in the basic version, plus:
-- **Priorities** — tag tasks as High, Medium, or Low
-- **Due dates** — optional date in `YYYY-MM-DD` format
-- **Edit tasks** — update text, priority, or due date
-- **Search** — find tasks by keyword
-- **Sort** — by priority, due date, or completion status
-- **Clear completed** — remove all finished tasks in one step
+---
+
+## Special Functions & Concepts Used
+
+| Function / Concept | What it does |
+|---|---|
+| `load_tasks()` | Reads `tasks.txt` line by line and rebuilds the task list using `str.split("\|", 3)` |
+| `save_tasks()` | Writes the current task list back to disk after every change |
+| `get_task_index()` | Shared helper that safely validates user-entered task numbers (keeps code DRY) |
+| `valid_date()` | Uses `datetime.strptime()` to validate `YYYY-MM-DD` input and catch bad formats |
+| `choose_priority()` | Restricts priority input to a fixed set (High/Medium/Low) to avoid typos |
+| `sort_tasks()` | Uses `list.sort(key=lambda ...)` with a priority-rank dictionary for custom ordering |
+| `search_tasks()` | Uses a **list comprehension** to filter tasks by keyword |
+| `clear_completed()` | Uses in-place list reassignment (`tasks[:] = [...]`) to remove finished tasks |
+
+---
+
+## 📚 Libraries Used
+
+Built with **zero external dependencies** — just the Python standard library:
+
+- [`os`](https://docs.python.org/3/library/os.html) — checks whether `tasks.txt` already exists
+- [`datetime`](https://docs.python.org/3/library/datetime.html) — validates due dates against the `YYYY-MM-DD` format
+
+> 💡 No `pip install` required — just clone and run.
+
+---
 
 ## Requirements
+- 🐍 Python 3.6 or higher
 
-- Python 3.6 or higher
-- No external libraries — uses only the Python standard library (`os`, `datetime`)
+---
 
-## Installation
-
-Clone the repository:
-
-```bash
-git clone https://github.com/your-username/python-todo-list.git
-cd python-todo-list
-```
-
-## Usage
-
-Run the basic version:
-
-```bash
-python todo_list.py
-```
-
-Run the advanced version:
-
-```bash
-python todo_list_advanced.py
-```
-
-You'll see a menu like this:
+## 🖥️ Menu Overview
 
 ```
 ========= TODO LIST =========
@@ -69,42 +67,25 @@ You'll see a menu like this:
 ==============================
 ```
 
-Enter the number corresponding to the action you want, and follow the prompts.
+---
 
-## How Tasks Are Stored
+## 💾 How Tasks Are Stored
 
 Tasks are saved in a plain text file called `tasks.txt`, created automatically in the same folder as the script.
 
-- **Basic version format:** `done|text`
-- **Advanced version format:** `done|priority|due_date|text`
+**Format:** `done|priority|due_date|text`
 
-Example (advanced):
+- `done` → `1` for complete, `0` for incomplete
+- `priority` → `High`, `Medium`, or `Low`
+- `due_date` → optional, left blank if not set
+- `text` → the task description
 
-```
-0|High|2026-07-01|Finish project report
-1|Medium||Buy groceries
-```
 
-> ⚠️ The two versions use different file formats. Avoid running both versions against the same `tasks.txt` file in the same folder, as it will cause read errors.
+## Future Improvements
 
-## Project Structure
+- 🔔 Due-date reminders shown on startup
+- 📤 Export tasks to CSV
+- 🏷️ Tags/categories for grouping tasks
+- 🔁 Recurring tasks
+- 🎨 Colored terminal output
 
-```
-python-todo-list/
-├── todo_list.py            # Basic CLI TODO app
-├── todo_list_advanced.py   # Advanced CLI TODO app with extra features
-├── tasks.txt                # Auto-generated task storage (created on first run)
-└── README.md
-```
-
-## Possible Future Improvements
-
-- Categories/tags for tasks
-- Due-date reminders shown on startup
-- Export tasks to CSV
-- A graphical interface using `tkinter`
-- Recurring tasks
-
-## License
-
-This project is open source and available under the [MIT License](LICENSE).
