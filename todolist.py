@@ -1,4 +1,4 @@
-"Command-Line TO-DO List Application"
+#Command-Line TO-DO List Application
 
 import os
 from datetime import datetime
@@ -6,9 +6,8 @@ from datetime import datetime
 FILENAME = "tasks.txt"
 PRIORITIES = {"1": "High", "2": "Medium", "3": "Low"}
 
-
+#Read tasks from file into a list of dictionaries"
 def load_tasks():
-    "Read tasks from file into a list of dicts."
     tasks = []
     if os.path.exists(FILENAME):
         with open(FILENAME, "r") as f:
@@ -27,16 +26,18 @@ def load_tasks():
     return tasks
 
 
+#Write all tasks back to the file
 def save_tasks(tasks):
-    "Write all tasks back to the file."
+    
     with open(FILENAME, "w") as f:
         for t in tasks:
             status = "1" if t["done"] else "0"
             f.write(f"{status}|{t['priority']}|{t['due']}|{t['text']}\n")
 
 
+#Return True if date_str is empty or matches YYYY-MM-DD
 def valid_date(date_str):
-    """Return True if date_str is empty or matches YYYY-MM-DD."""
+    
     if date_str == "":
         return True
     try:
@@ -45,10 +46,9 @@ def valid_date(date_str):
     except ValueError:
         return False
 
-
 def show_tasks(tasks, filtered=None):
-    """Display tasks with index, status, priority, and due date.
-    If 'filtered' is given, show that subset instead (search results)."""
+    #Display tasks with index, status, priority, and due date.If 'filtered' is given, show that subset instead (search results)
+
     items = filtered if filtered is not None else tasks
     if not items:
         print("\nNo tasks to show.\n")
@@ -215,3 +215,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
